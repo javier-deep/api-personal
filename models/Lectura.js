@@ -17,7 +17,7 @@ const lecturaSchema = new mongoose.Schema(
       type: Number,
       required: true,
       min: 0,
-      max: 220,
+      max: 500,
     },
     acceleration: {
       type: Number,
@@ -25,7 +25,7 @@ const lecturaSchema = new mongoose.Schema(
     },
     petState: {
       type: String,
-      enum: ['FELIZ', 'TRISTE', 'CANSADO', 'ENERGÉTICO', 'NORMAL'],
+      enum: ['FELIZ', 'DORMIDA', 'ACTIVA', 'TRISTE', 'NORMAL'],
       default: 'NORMAL',
     },
     deviceInfo: {

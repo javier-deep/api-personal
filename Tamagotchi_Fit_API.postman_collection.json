@@ -1,0 +1,234 @@
+{
+  "info": {
+    "_postman_id": "tamagotchi-fit-api",
+    "name": "Tamagotchi Fit API",
+    "description": "Colección de endpoints para la API Tamagotchi Fit",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Health Check",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/api/v1/health",
+          "host": ["{{base_url}}"],
+          "path": ["api", "v1", "health"]
+        },
+        "description": "Verificar que la API está en funcionamiento"
+      }
+    },
+    {
+      "name": "Registrar Datos de Sensor",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"userId\": \"user_12345\",\n  \"heartRate\": 125.5,\n  \"acceleration\": 12.8,\n  \"petState\": \"FELIZ\",\n  \"timestamp\": \"{{$isoTimestamp}}\",\n  \"deviceInfo\": {\n    \"model\": \"Pixel Watch 3\",\n    \"platform\": \"Wear OS 5\"\n  }\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/api/v1/sensor-data",
+          "host": ["{{base_url}}"],
+          "path": ["api", "v1", "sensor-data"]
+        },
+        "description": "Registrar nuevos datos de sensor"
+      }
+    },
+    {
+      "name": "Registrar Sensor - Usuario 1",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"userId\": \"user_001\",\n  \"heartRate\": 72,\n  \"acceleration\": 2.1,\n  \"petState\": \"NORMAL\"\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/api/v1/sensor-data",
+          "host": ["{{base_url}}"],
+          "path": ["api", "v1", "sensor-data"]
+        }
+      }
+    },
+    {
+      "name": "Registrar Sensor - Usuario 2",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"userId\": \"user_002\",\n  \"heartRate\": 95,\n  \"acceleration\": 5.3,\n  \"petState\": \"ENERGÉTICO\"\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/api/v1/sensor-data",
+          "host": ["{{base_url}}"],
+          "path": ["api", "v1", "sensor-data"]
+        }
+      }
+    },
+    {
+      "name": "Registrar Sensor - Usuario 3",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"userId\": \"user_003\",\n  \"heartRate\": 118,\n  \"acceleration\": 8.9,\n  \"petState\": \"TRISTE\"\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/api/v1/sensor-data",
+          "host": ["{{base_url}}"],
+          "path": ["api", "v1", "sensor-data"]
+        }
+      }
+    },
+    {
+      "name": "Obtener Estadísticas - Usuario 1",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/api/v1/stats/user_001",
+          "host": ["{{base_url}}"],
+          "path": ["api", "v1", "stats", "user_001"]
+        },
+        "description": "Obtener historial y estadísticas del usuario 1"
+      }
+    },
+    {
+      "name": "Obtener Estadísticas - Usuario 2",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/api/v1/stats/user_002",
+          "host": ["{{base_url}}"],
+          "path": ["api", "v1", "stats", "user_002"]
+        }
+      }
+    },
+    {
+      "name": "Obtener Estadísticas - Usuario 3",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/api/v1/stats/user_003",
+          "host": ["{{base_url}}"],
+          "path": ["api", "v1", "stats", "user_003"]
+        }
+      }
+    },
+    {
+      "name": "Obtener Estadísticas con Paginación",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/api/v1/stats/user_001?limit=10&skip=0&sort=-timestamp",
+          "host": ["{{base_url}}"],
+          "path": ["api", "v1", "stats", "user_001"],
+          "query": [
+            {
+              "key": "limit",
+              "value": "10"
+            },
+            {
+              "key": "skip",
+              "value": "0"
+            },
+            {
+              "key": "sort",
+              "value": "-timestamp"
+            }
+          ]
+        },
+        "description": "Obtener estadísticas con parámetros de paginación"
+      }
+    },
+    {
+      "name": "Obtener Estadísticas - Ordenado por Heart Rate",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/api/v1/stats/user_001?limit=5&sort=heartRate",
+          "host": ["{{base_url}}"],
+          "path": ["api", "v1", "stats", "user_001"],
+          "query": [
+            {
+              "key": "limit",
+              "value": "5"
+            },
+            {
+              "key": "sort",
+              "value": "heartRate"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "Registrar Sensor - Usuario 12345",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"userId\": \"user_12345\",\n  \"heartRate\": 125.5,\n  \"acceleration\": 12.8,\n  \"petState\": \"FELIZ\",\n  \"timestamp\": \"2024-07-01T10:30:00Z\",\n  \"deviceInfo\": {\n    \"model\": \"Pixel Watch 3\",\n    \"platform\": \"Wear OS 5\"\n  }\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/api/v1/sensor-data",
+          "host": ["{{base_url}}"],
+          "path": ["api", "v1", "sensor-data"]
+        }
+      }
+    },
+    {
+      "name": "Obtener Estadísticas - Usuario 12345",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/api/v1/stats/user_12345",
+          "host": ["{{base_url}}"],
+          "path": ["api", "v1", "stats", "user_12345"]
+        }
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:3000",
+      "type": "string"
+    }
+  ]
+}

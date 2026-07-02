@@ -28,8 +28,13 @@ router.post('/sensor-data', async (req, res) => {
       deviceInfo,
     });
 
+    console.log('📝 Documento creado:', JSON.stringify(lectura, null, 2));
+
     // Guardar en base de datos
-    await lectura.save();
+    const saved = await lectura.save();
+    
+    console.log('✅ Guardado en BD:', saved._id);
+    console.log('📊 Total de registros para este usuario:', await Lectura.countDocuments({ userId }));
 
     res.status(201).json({
       success: true,

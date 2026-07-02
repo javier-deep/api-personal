@@ -44,6 +44,11 @@ app.get('/api/v1/health', (req, res) => {
     message: 'API Tamagotchi Fit está en funcionamiento',
     timestamp: new Date(),
     environment: config.nodeEnv,
+    mongodb: {
+      connected: mongoose.connection.readyState === 1,
+      state: ['disconnected', 'connected', 'connecting', 'disconnecting'][mongoose.connection.readyState],
+      uri: config.mongodbUri ? config.mongodbUri.substring(0, 50) + '...' : 'NO CONFIGURADA'
+    }
   });
 });
 

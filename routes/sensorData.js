@@ -34,7 +34,15 @@ router.post('/sensor-data', async (req, res) => {
     const saved = await lectura.save();
     
     console.log('✅ Guardado en BD:', saved._id);
-    console.log('📊 Total de registros para este usuario:', await Lectura.countDocuments({ userId }));
+    
+    // Verificar que realmente se guardó
+    const verificar = await Lectura.findById(saved._id);
+    if (!verificar) {
+      console.error('⚠️  ADVERTENCIA: Documento guardado pero no se puede recuperar!');
+    }
+    
+    const count = await Lectura.countDocuments({ userId });
+    console.log(`📊 Total de registros para userId "${userId}": ${count}`);
 
     res.status(201).json({
       success: true,

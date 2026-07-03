@@ -52,6 +52,39 @@ app.get('/api/v1/health', (req, res) => {
   });
 });
 
+// Endpoint de test para debuggear
+app.get('/api/v1/test-insert', async (req, res) => {
+  try {
+    const Lectura = require('./models/Lectura');
+    
+    const testData = {
+      userId: 'test_' + Date.now(),
+      heartRate: 100,
+      acceleration: 5,
+      petState: 'FELIZ'
+    };
+    
+    const lectura = new Lectura(testData);
+    const saved = await lectura.save();
+    
+    // Verificar que se guardó
+    const verify = await Lectura.findById(saved._id);
+    
+    res.json({
+      success: true,
+      message: 'Test insert exitoso',
+      inserted: saved,
+      verified: verify,
+      total: await Lectura.countDocuments()
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      error: error.message
+    });
+  }
+});
+
 // Rutas de sensor
 app.use('/api/v1', sensorDataRoutes);
 

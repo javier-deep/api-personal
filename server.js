@@ -47,7 +47,10 @@ app.get('/api/v1/health', (req, res) => {
     mongodb: {
       connected: mongoose.connection.readyState === 1,
       state: ['disconnected', 'connected', 'connecting', 'disconnecting'][mongoose.connection.readyState],
-      uri: config.mongodbUri ? config.mongodbUri.substring(0, 50) + '...' : 'NO CONFIGURADA'
+      uri: config.mongodbUri ? config.mongodbUri.substring(0, 50) + '...' : 'NO CONFIGURADA',
+      database: mongoose.connection.name,
+      host: mongoose.connection.host,
+      collections: mongoose.connection.collections ? Object.keys(mongoose.connection.collections) : []
     }
   });
 });

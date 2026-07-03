@@ -66,6 +66,55 @@ router.post('/sensor-data', async (req, res) => {
 });
 
 /**
+ * GET /api/v1/sensor-data/:userId
+ * Obtiene los últimos 20 registros de sensores de un usuario
+ * Formato compatible con modelo Kotlin SensorDataRequest
+ */
+router.get('/sensor-data/:userId', async (req, res) => {
+  try {
+    const { userId } = req.params;
+    const { limit = 20 } = req.query;
+
+    // Validar userId
+    if (!userId || userId.trim() === '') {
+      return res.status(400).json({
+        success: false,
+        message: 'userId es requerido y no puede estar vacío',
+      });
+    }
+
+    console.log(`📖 [GET SENSOR-DATA] Consultando userId: "${userId}" - Límite: ${limit}`);
+
+    // Obtener registros ordenados por timestamp descendente (más recientes primero)
+    const registros = await Lectura.find({ userId })
+      .sort({ timestamp: -1 })
+      .limit(parseInt(limit))
+      .lean(); // lean() para mejor rendimiento
+
+    console.log(`✅ Se encontraron ${registros.length} registros`);
+
+    // Mapear al formato exacto que Kotlin espera
+    const sensorDataArray = registros.map((doc) => ({
+      userId: doc.userId,
+      heartRate: doc.heartRate,
+      acceleration: doc.acceleration,
+      petState: doc.petState,
+      timestamp: doc.timestamp ? doc.timestamp.getTime() : new Date(doc.timestamp).getTime(), // Convertir a milisegundos
+    }));
+
+    // Responder directamente con el array (sin wrapper de success)
+    res.status(200).json(sensorDataArray);
+  } catch (error) {
+    console.error('❌ Error al obtener datos de sensor:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Error al obtener datos de sensor',
+      error: error.message,
+    });
+  }
+});
+
+/**
  * GET /api/v1/stats/:userId
  * Obtiene el historial de un usuario específico
  */
